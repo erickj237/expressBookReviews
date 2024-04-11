@@ -32,15 +32,18 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop Task 10 & 1
-public_users.get('/',async function (req, res) {
+public_users.get('/', async function (req, res) {
     try {
-      const bookList = await getBooks(); 
-      res.json(bookList);
+        const bookList = await new Promise((resolve, reject) => {
+            resolve(books);
+        });
+        res.json(bookList);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error retrieving books. Please try again." });
+        console.error(error);
+        res.status(500).json({ message: "Error retrieving books. Please try again." });
     }
-  });
+});
+
 
 // Get book details based on ISBN - Task 11 & 2
 public_users.get('/isbn/:isbn', function (req, res) {
